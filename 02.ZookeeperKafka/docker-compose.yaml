@@ -1,0 +1,239 @@
+services:
+  zookeeper1:
+    image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper1
+    container_name: zookeeper1
+    environment:
+      #KAFKA_OPTS: "-Dzookeeper.multiAddress.enabled=false"
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      JMX_PORT: 8048
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+    ports:
+      - "2181:2181"
+      - "8048:8048"
+    volumes:
+      - ./zk-cluster/zookeeper1/data:/var/lib/zookeeper/data
+      - ./zk-cluster/zookeeper1/log:/var/lib/zookeeper/log
+    networks:
+      - kafka
+      
+  zookeeper2:
+    image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper2
+    container_name: zookeeper2
+    environment:
+      #KAFKA_OPTS: "-Dzookeeper.multiAddress.enabled=false"
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+
+      JMX_PORT: 8049
+    ports:
+      - "2182:2182"
+      - "8049:8049"
+    volumes:
+      - ./zk-cluster/zookeeper2/data:/var/lib/zookeeper/data
+      - ./zk-cluster/zookeeper2/log:/var/lib/zookeeper/log
+    networks:
+      - kafka
+
+  zookeeper3:
+    image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper3
+    container_name: zookeeper3
+    environment:
+      #KAFKA_OPTS: "-Dzookeeper.multiAddress.enabled=false"
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 2183
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      JMX_PORT: 8050
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+
+    ports:
+      - "2183:2183"
+      - "8050:8050"
+    volumes:
+      - ./zk-cluster/zookeeper3/data:/var/lib/zookeeper/data
+      - ./zk-cluster/zookeeper3/log:/var/lib/zookeeper/log
+    networks:
+      - kafka
+      
+  jmx-exporter-kafka1:
+    image: sscaling/jmx-prometheus-exporter:latest
+    hostname: jmx-exporter-kafka1
+    container_name: jmx-exporter-kafka1
+    depends_on:
+      - kafka1 
+    ports:
+      - "5556:5556"
+    volumes:
+      - ./kafka_jmx_config.yml:/kafka_jmx_config.yml
+    environment:
+      - SERVICE_PORT=5556
+      - CONFIG=/kafka_jmx_config.yml
+      - JMX_HOST=kafka1
+      - JMX_PORT=9997
+    networks:
+      - kafka
+      
+  jmx-exporter-kafka2:
+    image: sscaling/jmx-prometheus-exporter:latest
+    hostname: jmx-exporter-kafka2
+    container_name: jmx-exporter-kafka2
+    depends_on:
+      - kafka2 
+    ports:
+      - "5557:5557"
+    volumes:
+      - ./kafka_jmx_config.yml:/kafka_jmx_config.yml
+    environment:
+      - SERVICE_PORT=5557
+      - CONFIG=/kafka_jmx_config.yml
+      - JMX_HOST=kafka2
+      - JMX_PORT=9998
+    networks:
+      - kafka
+      
+  jmx-exporter-kafka3:
+    image: sscaling/jmx-prometheus-exporter:latest
+    hostname: jmx-exporter-kafka3
+    container_name: jmx-exporter-kafka3
+    depends_on:
+      - kafka3 
+    ports:
+      - "5558:5558"
+    volumes:
+      - ./kafka_jmx_config.yml:/kafka_jmx_config.yml
+    environment:
+      - SERVICE_PORT=5558
+      - CONFIG=/kafka_jmx_config.yml
+      - JMX_HOST=kafka3
+      - JMX_PORT=9999
+    networks:
+      - kafka
+      
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - zookeeper1 
+      - kafka1
+      - kafka2
+      - kafka3
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper1:2181,zookeeper2:2182,zookeeper3:2183
+      #KAFKA_CLUSTERS_0_JMXPORT: 9997
+    networks:
+      - kafka
+      
+  kafka1:
+    image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka1
+    container_name: kafka1 
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2181,zookeeper2:2182,zookeeper3:2183
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: 'yes'      
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      JMX_PORT: 9997
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9997 -Dcom.sun.management.jmxremote.rmi.port=9997 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
+      # KAFKA_OPTS: -javaagent:/opt/bitnami/jmx_prometheus_javaagent.jar=7071:/opt/bitnami/kafka-metrics.yml
+      # optional - enable topic auto create
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    ports:
+      - "9092:9092"
+      - "9997:9997"
+    networks:
+      - kafka
+      
+  kafka2:
+    image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka2
+    container_name: kafka2 
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2181,zookeeper2:2182,zookeeper3:2183
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: 'yes'      
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      JMX_PORT: 9998
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.rmi.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
+      # KAFKA_OPTS: -javaagent:/opt/bitnami/jmx_prometheus_javaagent.jar=7071:/opt/bitnami/kafka-metrics.yml
+      # optional - enable topic auto create
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: 'true'      
+    ports:
+      - "9093:9093"
+      - "9998:9998"
+    networks:
+      - kafka
+      
+  kafka3:
+    image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka3
+    container_name: kafka3 
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2181,zookeeper2:2182,zookeeper3:2183
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: 'yes'      
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9094
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      JMX_PORT: 9999
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
+      # KAFKA_OPTS: -javaagent:/opt/bitnami/jmx_prometheus_javaagent.jar=7071:/opt/bitnami/kafka-metrics.yml
+      # optional - enable topic auto create
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    ports:
+      - "9094:9094"
+      - "9999:9999"
+    networks:
+      - kafka
+
+  zooui:
+    image: elkozmon/zoonavigator:latest
+    hostname: zooui
+    container_name: zooui
+    ports:
+      - "9000:9000"
+    environment:
+      - HTTP_PORT=9000
+    networks:
+      - kafka
+
+networks: 
+  kafka: 
+    name: kafka
+    driver: bridge  
+    external: false 
+

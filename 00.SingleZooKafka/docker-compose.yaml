@@ -1,0 +1,88 @@
+---
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.4.1
+    container_name: zookeeper
+    tmpfs: /zktmp
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: yes
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka
+    ports:
+      - 2181:2181
+    volumes:
+      - ./zoo/data:/var/lib/zookeeper/data
+      - ./zoo/log:/var/lib/zookeeper/log
+  kafka1:
+    image: bitnami/kafka:3.7.0
+    container_name: kafka1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_JMX_PORT: 9101
+      JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CFG_LISTENERS: INTERNAL://:9092,EXTERNAL://0.0.0.0:29092
+      KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL://localhost:29092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.port=9101
+        -Dcom.sun.management.jmxremote.rmi.port=9101
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
+      ALLOW_PLAINTEXT_LISTENER: yes
+    ports:
+      - 9092:9092
+      - 29092:29092
+      - 9101:9101
+    volumes:
+      - ./broker1/data:/var/lib/kafka/data
+    networks:
+      - kafka
+  jmx-exporter1:
+    image: bitnami/jmx-exporter:latest
+    container_name: jmxexporter1
+    depends_on:
+      - kafka1
+    ports:
+      - 5556:5556
+    environment:
+      - JMX_HOST=kafka1
+      - JMX_PORT=9101
+      - JMX_CONFIG=/opt/jmx_exporter/kafka_jmx_config.yaml
+    networks:
+      - kafka
+    volumes:
+      - ./kafka_jmx_config.yaml:/opt/jmx_exporter/kafka_jmx_config.yaml
+
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - zookeeper
+      - kafka1
+    ports:
+      - 8080:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_JMXPORT: 9101
+    networks:
+      - kafka
+
+
+networks:
+  kafka:
+    name: kafka
+    driver: bridge
+    external: false

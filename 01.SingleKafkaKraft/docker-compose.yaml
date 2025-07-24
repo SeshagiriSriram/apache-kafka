@@ -1,0 +1,77 @@
+---
+services:
+
+  kafka1:
+    image: bitnami/kafka:3.7.0
+    container_name: kafka1
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_KRAFT_CLUSTER_ID: I1eVoyz0SbqoZ30ptAy5sw
+      KAFKA_JMX_PORT: 9101
+      JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@127.0.0.1:9093
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_CFG_NODE_ID: 1
+      BITNAMI_DEBUG: yes
+      KAFKA_CFG_NUM_PARTITIONS: 2  
+
+      KAFKA_ENABLE_KRAFT: yes
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE:  true     
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER 
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092,EXTERNAL://kafka1:9094
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.port=9101
+        -Dcom.sun.management.jmxremote.rmi.port=9101
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost
+    ports:
+      - 9092:9092
+      - 9101:9101
+      - 9094:9094
+    volumes:
+      - ./broker1/data:/var/lib/kafka/data
+    networks:
+      - kafka
+  jmx-exporter1:
+    image: bitnami/jmx-exporter:latest
+    container_name: jmxexporter1
+    depends_on:
+      - kafka1
+    ports:
+      - 5556:5556
+    environment:
+      - JMX_HOST=kafka1
+      - JMX_PORT=9101
+      - JMX_CONFIG=/opt/jmx_exporter/kafka_jmx_config.yaml
+    networks:
+      - kafka
+    volumes:
+      - ./kafka_jmx_config.yaml:/opt/jmx_exporter/kafka_jmx_config.yaml
+
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - kafka1
+    ports:
+      - 8080:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
+      KAFKA_CLUSTERS_0_JMXPORT: 9101
+    networks:
+      - kafka
+
+
+networks:
+  kafka:
+    name: kafka
+    driver: bridge
+    external: false

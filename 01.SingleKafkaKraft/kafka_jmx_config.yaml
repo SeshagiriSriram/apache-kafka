@@ -1,0 +1,17 @@
+startDelaySeconds: 0
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  - pattern: "java.lang<type=Memory><>HeapMemoryUsage"
+    name: jvm_memory_heap_usage
+    type: GAUGE
+    attrNameSnakeCase: true
+  - pattern: "kafka.server<type=(.+), name=(.+)><>Value"
+    name: kafka_server_$1_$2
+    type: GAUGE
+  - pattern: "kafka.network<type=RequestMetrics, name=(.+), request=(.+)><>Count"
+    name: kafka_network_request_$2_$1_total
+    type: COUNTER
+  - pattern: "kafka.controller<type=KafkaController, name=(.+)><>Value"
+    name: kafka_controller_$1
+    type: GAUGE
