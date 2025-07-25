@@ -25,20 +25,16 @@ This project demonstrates how to perform performance testing on Apache Kafka usi
 
 ## Setup Instructions
 
-### 1. Clone the repository
+### 1. Change Directory 
 
 ```bash
-git clone https://github.com/mcagriaktas/kafka-container-setup.git
 cd kafka-container-setup/kakfa_jmeter_kloadgen_test
 ```
-
-### 2. Create Docker Network
-
-```bash
-docker network create --subnet=172.80.0.0/16 dahbest
+```windows
+cd kafka-container-setup\kakfa_jmeter_kloadgen_test
 ```
 
-### 3. Build Docker Containers
+### 2. Build Docker Containers
 
 ```bash
 docker-compose up -d --build
@@ -49,6 +45,10 @@ docker-compose up -d --build
 ```bash
 wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
 tar -xzf apache-jmeter-5.6.3.tgz
+```
+
+```windows
+Open Apache JMETER web site and download the ZIP and extract to a folder say d:\jmeter
 ```
 
 ### 5. Build KLoadGen
@@ -89,13 +89,14 @@ You can find the `sample data` in the `test_file folder`. `JMeter will use KLoad
 
 ```bash
 # AVRO Topic
-./kafka-topics.sh --create --topic hotel-avro --partitions 72 --replication-factor 1 --bootstrap-server localhost:19092
+./kafka-topics.sh --create --topic hotel-avro --partitions 72 --replication-factor 1 --bootstrap-server localhost:9092
 
 # JSON Topic
-./kafka-topics.sh --create --topic hotel-json --partitions 72 --replication-factor 1 --bootstrap-server localhost:19092
+./kafka-topics.sh --create --topic hotel-json --partitions 72 --replication-factor 1 --bootstrap-server localhost:9092
 ```
 
 ### Note: You can use my other Kafka setup to deploy 3 Kafka brokers for real testing. 
+### Note: If you are running on a different port, change the above as well as the JMX file 
 
 ## Running the Test
 
@@ -104,6 +105,7 @@ You can find the `sample data` in the `test_file folder`. `JMeter will use KLoad
    ./apache-jmeter-5.6.3/bin/jmeter
    ```
 
+    On windows, double click the jmeter.jar or run as java -jar jmeter.jar
 2. Load the test plan:
    ```
    File → Open → test_file → avro_json.jmx

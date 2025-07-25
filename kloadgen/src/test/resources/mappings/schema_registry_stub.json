@@ -1,0 +1,341 @@
+{
+  "mappings": [
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects/users/versions/latest"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "users",
+          "version": 1,
+          "id": 72,
+          "schemaType": "AVRO",
+          "schema": "{\"name\": \"Parent\",\"type\":\"record\",\"fields\":[{\"name\": \"Users\",\"type\": {\"type\": \"array\",\"items\": {\"name\": \"User\",\"type\": \"record\",\"fields\": [{\"name\": \"name\",\"type\": \"string\"},{\"name\": \"id\",\"type\":[\"null\",\"long\"]}]}}}]}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects/avroSubject/versions/latest"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "AvroSubject",
+          "version": 1,
+          "id": 71,
+          "schemaType": "AVRO",
+          "schema": "{\"type\" : \"record\",\"name\":\"test\",\"fields\" : [{\"name\":\"Name\" ,\"type\" : \"string\"},{\"name\":\"Age\", \"type\" : \"int\"}]}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects/arrayMap/versions/latest"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "arraymap",
+          "version": 1,
+          "id": 73,
+          "schemaType": "AVRO",
+          "schema": "{ \"type\" : \"record\", \"name\" : \"Test\", \"fields\" : [ { \"name\" : \"name\", \"type\" : \"string\" }, { \"name\" : \"values\", \"type\" : { \"type\" : \"array\", \"items\" : { \"type\" : \"map\", \"values\" : \"string\" } } } ] } }"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/schemas/ids/71\\?fetchMaxId=false&subject=avroSubject"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "schema": "{\"type\" : \"record\",\"name\":\"test\",\"fields\" : [{\"name\":\"Name\" ,\"type\" : \"string\"},{\"name\":\"Age\", \"type\" : \"int\"}]}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/schemas/ids/72\\?fetchMaxId=false&subject=users"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "schema": "{\"name\": \"Parent\",\"type\":\"record\",\"fields\":[{\"name\": \"Users\",\"type\": {\"type\": \"array\",\"items\": {\"name\": \"User\",\"type\": \"record\",\"fields\": [{\"name\": \"name\",\"type\": \"string\"},{\"name\": \"id\",\"type\": \"long\"}]}}}]}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/schemas/ids/73\\?fetchMaxId=false&subject=arrayMap"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "schema": "{ \"type\" : \"record\", \"name\" : \"Test\", \"fields\" : [ { \"name\" : \"name\", \"type\" : \"string\" }, { \"name\" : \"values\", \"type\" : { \"type\" : \"array\", \"items\" : { \"type\" : \"map\", \"values\" : \"string\" } } } ] } }"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects/protobuf_subject/versions/latest"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "ProtobufSubject",
+          "version": 1,
+          "id": 74,
+          "schemaType": "PROTOBUF",
+          "schema": "syntax = \"proto3\";\r\npackage sngular;\r\n\r\noption java_package = \"com.sngular.external.proto\";\r\noption java_outer_classname = \"ExternalMessage\";\r\noption java_multiple_files = true;\r\n\r\nmessage ExternalEntity{\r\n string parentPropertyOne = 1;\r\n int32 parentPropertyTwo = 2;\r\n \r\n  message EntityOne {\r\n    int32 entityNumberOne = 1;\r\n    string entityNumberTwo = 2;\r\n    \r\n    message NestingEntity {\r\n      string nestedProperty = 1;\r\n      \r\n      }\r\n    \r\n  }\r\n  \r\n  message EntityTwo {\r\n    int32 propertyNumberOne = 1;\r\n    string propertyNumberTwo = 2; \r\n  }\r\n\r\n}"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/schemas/ids/74\\?fetchMaxId=false&subject=protobuf_subject"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "schemaType": "PROTOBUF",
+          "schema": "syntax = \"proto3\";\r\npackage sngular;\r\n\r\noption java_package = \"com.sngular.external.proto\";\r\noption java_outer_classname = \"ExternalMessage\";\r\noption java_multiple_files = true;\r\n\r\nmessage ExternalEntity{\r\n string parentPropertyOne = 1;\r\n int32 parentPropertyTwo = 2;\r\n \r\n  message EntityOne {\r\n    int32 entityNumberOne = 1;\r\n    string entityNumberTwo = 2;\r\n    \r\n    message NestingEntity {\r\n      string nestedProperty = 1;\r\n      \r\n      }\r\n    \r\n  }\r\n  \r\n  message EntityTwo {\r\n    int32 propertyNumberOne = 1;\r\n    string propertyNumberTwo = 2; \r\n  }\r\n\r\n}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority":  10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects/protobufSubjectWithImport/versions/latest"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "ProtobufSubjectWithImport",
+          "version": 1,
+          "id": 75,
+          "schemaType": "PROTOBUF",
+          "schema": "syntax = \"proto3\";\r\npackage sngular;\r\n\r\nimport \"protobuf_subject.proto\";\r\n\r\noption java_package = \"com.sngular.internal.proto\";\r\noption java_outer_classname = \"InternalMessage\";\r\noption java_multiple_files = true;\r\n\r\nmessage InternalMessage{\r\n\r\n  InternalEntityOne propertyTest1 = 1;\r\n  EntityTwo propertyTest2 = 2;\r\n  \r\n  message InternalEntityOne {\r\n    ExternalEntity.EntityOne.NestingEntity importedProperty = 1;\r\n    string entityNumberTwo = 2;\r\n  }\r\n  \r\n  message EntityTwo {\r\n    int32 propertyNumberOne = 1;\r\n    string propertyNumberTwo = 2; \r\n  }\r\n\r\n}",
+          "references" : [{
+              "name": "protobuf_subject.proto",
+              "subject": "protobuf_subject",
+              "version": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/schemas/ids/75\\?fetchMaxId=false&subject=protobufSubjectWithImport"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "schemaType": "PROTOBUF",
+          "schema": "syntax = \"proto3\";\r\npackage sngular;\r\n\r\nimport \"protobuf_subject.proto\";\r\n\r\noption java_package = \"com.sngular.internal.proto\";\r\noption java_outer_classname = \"InternalMessage\";\r\noption java_multiple_files = true;\r\n\r\nmessage InternalMessage{\r\n\r\n  InternalEntityOne propertyTest1 = 1;\r\n  EntityTwo propertyTest2 = 2;\r\n  \r\n  message InternalEntityOne {\r\n    ExternalEntity.EntityOne.NestingEntity importedProperty = 1;\r\n    string entityNumberTwo = 2;\r\n  }\r\n  \r\n  message EntityTwo {\r\n    int32 propertyNumberOne = 1;\r\n    string propertyNumberTwo = 2; \r\n  }\r\n\r\n}",
+          "references" : [{
+            "name": "protobuf_subject.proto",
+            "subject": "protobuf_subject",
+            "version": 1
+          }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/subjects"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": [
+          "avrosubject",
+          "users",
+          "arrayMap",
+          "protobuf_subject",
+          "protobufSubjectWithImport"
+        ],
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+     "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern" : "/subjects/protobuf_subject/versions/1\\?deleted=true"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "subject": "protobuf_subject",
+          "version": 1,
+          "id": 74,
+          "schemaType": "PROTOBUF",
+          "schema": "syntax = \"proto3\";\npackage sngular;\n\noption java_package = \"com.sngular.external.proto\";\noption java_outer_classname = \"ExternalMessage\";\noption java_multiple_files = true;\n\nmessage ExternalEntity{\n string parentPropertyOne = 1;\n int32 parentPropertyTwo = 2;\n \n  message EntityOne {\n    int32 entityNumberOne = 1;\n    string entityNumberTwo = 2;\n    \n    message NestingEntity {\n      string nestedProperty = 1;\n      \n      }\n    \n  }\n  \n  message EntityTwo {\n    int32 propertyNumberOne = 1;\n    string propertyNumberTwo = 2; \n  }\n\n}"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+
+
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/apis/registry/v2/groups/default/artifacts/simple-schema/meta"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": "Test",
+          "version": 1,
+          "globalId": 72,
+          "id": "356f7e88-920e-46cd-a64c-e1e76a3e7b3a",
+          "type": "AVRO"
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/apis/registry/v2/search/artifacts"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "artifacts": [
+            {
+              "id": "147fc92d-d8e6-44a9-89a4-bf9bb8246735",
+              "name": "simple-schema",
+              "createdOn": "2022-12-31T23:59:59Z",
+              "type": "AVRO",
+              "state": "ENABLED",
+              "modifiedOn": "2022-12-31T23:59:59Z"
+            },
+            {
+              "id": "dad37185-782b-4bed-9cf6-678d1d4587d9",
+              "name": "simple-schema",
+              "createdOn": "2023-01-01T00:00:00Z",
+              "createdBy": "",
+              "type": "AVRO",
+              "state": "ENABLED",
+              "modifiedOn": "2023-01-01T00:00:00Z"
+            }
+          ],
+          "count": 2
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/apis/registry/v2/groups/default/artifacts/dad37185-782b-4bed-9cf6-678d1d4587d9/meta"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": "simple-schema",
+          "createdOn": "2023-01-01T00:00:00Z",
+          "modifiedOn": "2023-01-01T00:00:00Z",
+          "id": "dad37185-782b-4bed-9cf6-678d1d4587d9",
+          "version": "1",
+          "type": "AVRO",
+          "globalId": 72,
+          "state": "ENABLED",
+          "contentId": 1,
+          "references": []
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    },
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPattern": "/apis/registry/v2/ids/globalIds/72\\?dereference=false"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": "test",
+          "type": "record",
+          "fields": [
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "Age",
+              "type": "int"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/vnd.schemaregistry.v1+json"
+        }
+      }
+    }
+  ]
+}

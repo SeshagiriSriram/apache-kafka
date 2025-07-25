@@ -212,7 +212,7 @@
           <stringProp name="classname">com.sngular.kloadgen.sampler.KafkaProducerSampler</stringProp>
         </JavaSampler>
         <hashTree>
-          <com.sngular.kloadgen.config.valueserialized.ValueSerializedConfigElement guiclass="TestBeanGUI" testclass="com.sngular.kloadgen.config.valueserialized.ValueSerializedConfigElement" testname="KLG - Value Schema Serializer Config" enabled="true">
+          <com.sngular.kloadgen.config.valueserialized.ValueSerializedConfigElement guiclass="TestBeanGUI" testclass="com.sngular.kloadgen.config.valueserialized.ValueSerializedConfigElement" testname="KLG - Value Schema Serializer Config">
             <stringProp name="valueNameStrategy">com.sngular.kloadgen.strategy.RecordSubjectNameStrategy</stringProp>
             <collectionProp name="valueSchemaProperties">
               <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">

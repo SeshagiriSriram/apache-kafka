@@ -280,6 +280,8 @@
         <flink.version>1.16.1</flink.version>
         <jackson.version>2.15.4</jackson.version>
         <awaitility.version>3.0.0</awaitility.version>
+	<maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
 </project>

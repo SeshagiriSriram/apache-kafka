@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.5">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="Java Request" enabled="true">
+          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="bootstrap.servers" elementType="Argument">
+                <stringProp name="Argument.name">bootstrap.servers</stringProp>
+                <stringProp name="Argument.value">localhost:29092</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="zookeeper.servers" elementType="Argument">
+                <stringProp name="Argument.name">zookeeper.servers</stringProp>
+                <stringProp name="Argument.value">&lt;Zookeeper List&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="kafka.topic.name" elementType="Argument">
+                <stringProp name="Argument.name">kafka.topic.name</stringProp>
+                <stringProp name="Argument.value">test_topic</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="compression.type" elementType="Argument">
+                <stringProp name="Argument.name">compression.type</stringProp>
+                <stringProp name="Argument.value">none</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="batch.size" elementType="Argument">
+                <stringProp name="Argument.name">batch.size</stringProp>
+                <stringProp name="Argument.value">16384</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="linger.ms" elementType="Argument">
+                <stringProp name="Argument.name">linger.ms</stringProp>
+                <stringProp name="Argument.value">0</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="buffer.memory" elementType="Argument">
+                <stringProp name="Argument.name">buffer.memory</stringProp>
+                <stringProp name="Argument.value">33554432</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="acks" elementType="Argument">
+                <stringProp name="Argument.name">acks</stringProp>
+                <stringProp name="Argument.value">1</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="send.buffer.bytes" elementType="Argument">
+                <stringProp name="Argument.name">send.buffer.bytes</stringProp>
+                <stringProp name="Argument.value">131072</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="receive.buffer.bytes" elementType="Argument">
+                <stringProp name="Argument.name">receive.buffer.bytes</stringProp>
+                <stringProp name="Argument.value">32768</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="security.protocol" elementType="Argument">
+                <stringProp name="Argument.name">security.protocol</stringProp>
+                <stringProp name="Argument.value">PLAINTEXT</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="kerberos.auth.enabled" elementType="Argument">
+                <stringProp name="Argument.name">kerberos.auth.enabled</stringProp>
+                <stringProp name="Argument.value">NO</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="jaas.enabled" elementType="Argument">
+                <stringProp name="Argument.name">jaas.enabled</stringProp>
+                <stringProp name="Argument.value">NO</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="java.security.auth.login.config" elementType="Argument">
+                <stringProp name="Argument.name">java.security.auth.login.config</stringProp>
+                <stringProp name="Argument.value">&lt;JAAS File Location&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="java.security.krb5.conf" elementType="Argument">
+                <stringProp name="Argument.name">java.security.krb5.conf</stringProp>
+                <stringProp name="Argument.value">&lt;krb5.conf location&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="sasl.kerberos.service.name" elementType="Argument">
+                <stringProp name="Argument.name">sasl.kerberos.service.name</stringProp>
+                <stringProp name="Argument.value">kafka</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="sasl.mechanism" elementType="Argument">
+                <stringProp name="Argument.name">sasl.mechanism</stringProp>
+                <stringProp name="Argument.value">GSSAPI</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.enabled" elementType="Argument">
+                <stringProp name="Argument.name">ssl.enabled</stringProp>
+                <stringProp name="Argument.value">NO</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.key.password" elementType="Argument">
+                <stringProp name="Argument.name">ssl.key.password</stringProp>
+                <stringProp name="Argument.value">&lt;Key Password&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.keystore.location" elementType="Argument">
+                <stringProp name="Argument.name">ssl.keystore.location</stringProp>
+                <stringProp name="Argument.value">&lt;Keystore Location&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.keystore.password" elementType="Argument">
+                <stringProp name="Argument.name">ssl.keystore.password</stringProp>
+                <stringProp name="Argument.value">&lt;Keystore Password&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.truststore.location" elementType="Argument">
+                <stringProp name="Argument.name">ssl.truststore.location</stringProp>
+                <stringProp name="Argument.value">&lt;Truststore Location&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.truststore.password" elementType="Argument">
+                <stringProp name="Argument.name">ssl.truststore.password</stringProp>
+                <stringProp name="Argument.value">&lt;Truststore Password&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="client.id" elementType="Argument">
+                <stringProp name="Argument.name">client.id</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="security.providers" elementType="Argument">
+                <stringProp name="Argument.name">security.providers</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.enabled.protocols" elementType="Argument">
+                <stringProp name="Argument.name">ssl.enabled.protocols</stringProp>
+                <stringProp name="Argument.value">TLSv1.2,TLSv1.3</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.endpoint.identification.algorithm" elementType="Argument">
+                <stringProp name="Argument.name">ssl.endpoint.identification.algorithm</stringProp>
+                <stringProp name="Argument.value">https</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.keymanager.algorithm" elementType="Argument">
+                <stringProp name="Argument.name">ssl.keymanager.algorithm</stringProp>
+                <stringProp name="Argument.value">SunX509</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.keystore.type" elementType="Argument">
+                <stringProp name="Argument.name">ssl.keystore.type</stringProp>
+                <stringProp name="Argument.value">JKS</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.provider" elementType="Argument">
+                <stringProp name="Argument.name">ssl.provider</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ssl.protocol" elementType="Argument">
+                <stringProp name="Argument.name">ssl.protocol</stringProp>
+                <stringProp name="Argument.value">TLSv1.3</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="auto.register.schemas" elementType="Argument">
+                <stringProp name="Argument.name">auto.register.schemas</stringProp>
+                <stringProp name="Argument.value">true</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="classname">com.sngular.kloadgen.sampler.KafkaProducerSampler</stringProp>
+        </JavaSampler>
+        <hashTree/>
+        <com.sngular.kloadgen.config.valuefileserialized.ValueFileSerializedConfigElement guiclass="TestBeanGUI" testclass="com.sngular.kloadgen.config.valuefileserialized.ValueFileSerializedConfigElement" testname="Schema File Load Generator Config" enabled="true">
+          <stringProp name="valueSchemaType">AVRO</stringProp>
+          <stringProp name="valueNameStrategy">io.apicurio.registry.serde.avro.strategy.RecordIdStrategy</stringProp>
+          <stringProp name="valueSerializerConfiguration">io.confluent.kafka.serializers.KafkaAvroSerializer</stringProp>
+          <stringProp name="valueSubjectName">com.example.avro.User</stringProp>
+          <collectionProp name="valueSchemaProperties">
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">id</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">int</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">username</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">passwordHash</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">signupDate</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">emailAddresses[].address</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">emailAddresses[].verified</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">boolean</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">emailAddresses[].dateAdded</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">emailAddresses[].dateBounced</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">false</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].status</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">enum</stringProp>
+              <stringProp name="fieldValuesList">PENDING,ACTIVE,DENIED,EXPIRED,REVOKED</stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].userId</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].screenName</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].oauthToken</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].oauthTokenSecret</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">false</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">twitterAccounts[].dateAuthorized</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">toDoItems[].status</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">enum</stringProp>
+              <stringProp name="fieldValuesList">HIDDEN,ACTIONABLE,DONE,ARCHIVED,DELETED</stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">toDoItems[].title</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">true</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">toDoItems[].description</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">string</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">false</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+            <elementProp name="" elementType="com.sngular.kloadgen.model.FieldValueMapping">
+              <stringProp name="fieldName">toDoItems[].snoozeDate</stringProp>
+              <intProp name="valueLength">0</intProp>
+              <stringProp name="fieldType">long</stringProp>
+              <stringProp name="fieldValuesList"></stringProp>
+              <boolProp name="required">false</boolProp>
+              <boolProp name="ancestorRequired">true</boolProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="valueSchemaDefinition">{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;User&quot;,&quot;namespace&quot;:&quot;com.example.avro&quot;,&quot;doc&quot;:&quot;This is a user record in a fictitious to-do-list management app. It supports arbitrary grouping and nesting of items, and allows you to add items by email or by tweeting.\n\nNote this app doesn&amp;apos;t actually exist. The schema is just a demo for [Avrodoc](https://github.com/ept/avrodoc)!&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;id&quot;,&quot;type&quot;:&quot;int&quot;,&quot;doc&quot;:&quot;System-assigned numeric user ID. Cannot be changed by the user.&quot;},{&quot;name&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;The username chosen by the user. Can be changed by the user.&quot;},{&quot;name&quot;:&quot;passwordHash&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;The user&amp;apos;s password, hashed using [scrypt](http://www.tarsnap.com/scrypt.html).&quot;},{&quot;name&quot;:&quot;signupDate&quot;,&quot;type&quot;:&quot;long&quot;,&quot;doc&quot;:&quot;Timestamp (milliseconds since epoch) when the user signed up&quot;},{&quot;name&quot;:&quot;emailAddresses&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;EmailAddress&quot;,&quot;doc&quot;:&quot;Stores details about an email address that a user has associated with their account.&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;address&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;The email address, e.g. `foo@example.com`&quot;},{&quot;name&quot;:&quot;verified&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;doc&quot;:&quot;true if the user has clicked the link in a confirmation email to this address.&quot;,&quot;default&quot;:false},{&quot;name&quot;:&quot;dateAdded&quot;,&quot;type&quot;:&quot;long&quot;,&quot;doc&quot;:&quot;Timestamp (milliseconds since epoch) when the email address was added to the account.&quot;},{&quot;name&quot;:&quot;dateBounced&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;long&quot;],&quot;doc&quot;:&quot;Timestamp (milliseconds since epoch) when an email sent to this address last bounced. Reset to null when the address no longer bounces.&quot;}]}},&quot;doc&quot;:&quot;All email addresses on the user&amp;apos;s account&quot;},{&quot;name&quot;:&quot;twitterAccounts&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TwitterAccount&quot;,&quot;doc&quot;:&quot;Stores access credentials for one Twitter account, as granted to us by the user by OAuth.&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;status&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;enum&quot;,&quot;name&quot;:&quot;OAuthStatus&quot;,&quot;doc&quot;:&quot;* `PENDING`: the user has started authorizing, but not yet finished\n* `ACTIVE`: the token should work\n* `DENIED`: the user declined the authorization\n* `EXPIRED`: the token used to work, but now it doesn&amp;apos;t\n* `REVOKED`: the user has explicitly revoked the token&quot;,&quot;symbols&quot;:[&quot;PENDING&quot;,&quot;ACTIVE&quot;,&quot;DENIED&quot;,&quot;EXPIRED&quot;,&quot;REVOKED&quot;]},&quot;doc&quot;:&quot;Indicator of whether this authorization is currently active, or has been revoked&quot;},{&quot;name&quot;:&quot;userId&quot;,&quot;type&quot;:&quot;long&quot;,&quot;doc&quot;:&quot;Twitter&amp;apos;s numeric ID for this user&quot;},{&quot;name&quot;:&quot;screenName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;The twitter username for this account (can be changed by the user)&quot;},{&quot;name&quot;:&quot;oauthToken&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;The OAuth token for this Twitter account&quot;},{&quot;name&quot;:&quot;oauthTokenSecret&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;The OAuth secret, used for signing requests on behalf of this Twitter account. `null` whilst the OAuth flow is not yet complete.&quot;},{&quot;name&quot;:&quot;dateAuthorized&quot;,&quot;type&quot;:&quot;long&quot;,&quot;doc&quot;:&quot;Timestamp (milliseconds since epoch) when the user last authorized this Twitter account&quot;}]}},&quot;doc&quot;:&quot;All Twitter accounts that the user has OAuthed&quot;},{&quot;name&quot;:&quot;toDoItems&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;ToDoItem&quot;,&quot;doc&quot;:&quot;A record is one node in a To-Do item tree (every record can contain nested sub-records).&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;status&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;enum&quot;,&quot;name&quot;:&quot;ToDoStatus&quot;,&quot;doc&quot;:&quot;* `HIDDEN`: not currently visible, e.g. because it becomes actionable in future\n* `ACTIONABLE`: appears in the current to-do list\n* `DONE`: marked as done, but still appears in the list\n* `ARCHIVED`: marked as done and no longer visible\n* `DELETED`: not done and removed from list (preserved for undo purposes)&quot;,&quot;symbols&quot;:[&quot;HIDDEN&quot;,&quot;ACTIONABLE&quot;,&quot;DONE&quot;,&quot;ARCHIVED&quot;,&quot;DELETED&quot;]},&quot;doc&quot;:&quot;User-selected state for this item (e.g. whether or not it is marked as done)&quot;},{&quot;name&quot;:&quot;title&quot;,&quot;type&quot;:&quot;string&quot;,&quot;doc&quot;:&quot;One-line summary of the item&quot;},{&quot;name&quot;:&quot;description&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;doc&quot;:&quot;Detailed description (may contain HTML markup)&quot;},{&quot;name&quot;:&quot;snoozeDate&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;long&quot;],&quot;doc&quot;:&quot;Timestamp (milliseconds since epoch) at which the item should go from `HIDDEN` to `ACTIONABLE` status&quot;}]}},&quot;doc&quot;:&quot;The top-level items in the user&amp;apos;s to-do list&quot;}]}</stringProp>
+        </com.sngular.kloadgen.config.valuefileserialized.ValueFileSerializedConfigElement>
+        <hashTree/>
+        <com.sngular.kloadgen.config.schemaregistry.SchemaRegistryConfigElement guiclass="TestBeanGUI" testclass="com.sngular.kloadgen.config.schemaregistry.SchemaRegistryConfigElement" testname="Schema Registry Config Element" enabled="true">
+          <collectionProp name="schemaRegistryProperties">
+            <elementProp name="Config properties" elementType="com.sngular.kloadgen.model.PropertyMapping" testname="Config properties">
+              <stringProp name="propertyName">schema.registry.auth.enabled</stringProp>
+              <stringProp name="propertyValue">NO</stringProp>
+            </elementProp>
+            <elementProp name="Config properties" elementType="com.sngular.kloadgen.model.PropertyMapping" testname="Config properties">
+              <stringProp name="propertyName">schema.registry.auth.method</stringProp>
+              <stringProp name="propertyValue">BASIC</stringProp>
+            </elementProp>
+            <elementProp name="Config properties" elementType="com.sngular.kloadgen.model.PropertyMapping" testname="Config properties">
+              <stringProp name="propertyName">schema.registry.username</stringProp>
+              <stringProp name="propertyValue">&lt;username&gt;</stringProp>
+            </elementProp>
+            <elementProp name="Config properties" elementType="com.sngular.kloadgen.model.PropertyMapping" testname="Config properties">
+              <stringProp name="propertyName">schema.registry.password</stringProp>
+              <stringProp name="propertyValue">&lt;password&gt;</stringProp>
+            </elementProp>
+            <elementProp name="Config properties" elementType="com.sngular.kloadgen.model.PropertyMapping" testname="Config properties">
+              <stringProp name="propertyName">schema.registry.bearer</stringProp>
+              <stringProp name="propertyValue">&lt;bearer&gt;</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="schemaRegistryUrl">http://localhost:8081</stringProp>
+          <stringProp name="schemaRegistryName">Confluent</stringProp>
+        </com.sngular.kloadgen.config.schemaregistry.SchemaRegistryConfigElement>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

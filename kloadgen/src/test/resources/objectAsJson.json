@@ -1,0 +1,14 @@
+{
+  "name": "string",
+  "id": "int",
+  "lectures": {
+    "room": "int",
+    "subject": "string"
+  },
+  "exams": [
+    {
+      "day": "string",
+      "hour": "string"
+    }
+  ]
+}
