@@ -99,7 +99,6 @@ public class MessageWithKey {
         admin = Admin.create(adminProperties);
         producer = new KafkaProducer<>(producerProperties);
         consumer = new KafkaConsumer<>(consumerProperties);
-
         admin.createTopics(Collections.singleton(new NewTopic(TOPIC, PARTITIONS, REPLICATION_FACTOR)));
     }
 
